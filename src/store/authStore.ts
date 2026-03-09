@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   autoSignIn,
@@ -12,6 +11,8 @@ import {
   signOut as amplifySignOut,
   signUp as amplifySignUp,
 } from 'aws-amplify/auth';
+
+const { createJSONStorage, persist } = require('zustand/middleware') as typeof import('zustand/middleware');
 
 export type AuthStatus = 'booting' | 'signedOut' | 'signedIn';
 
