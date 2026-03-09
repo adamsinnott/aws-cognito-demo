@@ -1,65 +1,66 @@
-# Starter Template with React Navigation
+# AWS Cognito Demo
 
-This is a minimal starter template for React Native apps using Expo and React Navigation.
+This project is a React Native/Expo spike used to explore how we might use AWS Cognito in future applications and how straightforward Cognito integration is in practice.
 
-It includes the following:
+## What it supports
 
-- Example [Native Stack](https://reactnavigation.org/docs/native-stack-navigator) with a nested [Bottom Tab](https://reactnavigation.org/docs/bottom-tab-navigator)
-- Web support with [React Native for Web](https://necolas.github.io/react-native-web/)
-- TypeScript support and configured for React Navigation
-- Automatic [deep link](https://reactnavigation.org/docs/deep-linking) and [URL handling configuration](https://reactnavigation.org/docs/configuring-links)
-- Theme support [based on system appearance](https://reactnavigation.org/docs/themes/#using-the-operating-system-preferences)
-- Expo [Development Build](https://docs.expo.dev/develop/development-builds/introduction/) with [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)
+The app currently includes a complete email/password authentication path:
 
-## Getting Started
+- Create account (sign up)
+- Verify email address with confirmation code
+- Sign in
+- Forgot password (request reset code)
+- Reset password with code
+- Sign out
+- Session restore on app launch
 
-1. Create a new project using this template:
+Signed-in users are routed to a basic app shell (`Home` and `Settings`) to validate authenticated navigation.
 
-   ```sh
-   npx create-expo-app@latest --template react-navigation/template
-   ```
+## Stack
 
-2. Edit the `app.json` file to configure the `name`, `slug`, `scheme` and bundle identifiers (`ios.bundleIdentifier` and `android.bundleIdentifier`) for your app.
+- React Native + Expo + TypeScript
+- AWS Amplify Auth (`aws-amplify`) with Amazon Cognito
+- Zustand + AsyncStorage for persisted auth state
+- React Navigation for auth/app routing
 
-3. Edit the `src/App.tsx` file to start working on your app.
+## Cognito setup
 
-## Running the app
+Update [`src/config/env.ts`](src/config/env.ts) with your Cognito values:
 
-- Install the dependencies:
+- `COGNITO_REGION`
+- `COGNITO_USER_POOL_ID`
+- `COGNITO_APP_CLIENT_ID`
 
-  ```sh
-  npm install
-  ```
+The app client should be configured as a public client (no client secret) for mobile usage.
 
-- Start the development server:
+## Run locally
 
-  ```sh
-  npm start
-  ```
+```sh
+npm install
+npm start
+```
 
-- Build and run iOS and Android development builds:
+Optional platform commands:
 
-  ```sh
-  npm run ios
-  # or
-  npm run android
-  ```
+```sh
+npm run ios
+npm run android
+npm run web
+```
 
-- In the terminal running the development server, press `i` to open the iOS simulator, `a` to open the Android device or emulator, or `w` to open the web browser.
+`npm start` uses Expo dev client (`expo start --dev-client`), so this project is intended for development builds rather than Expo Go.
 
-## Notes
+## Hosted demo (GitHub Pages)
 
-This project uses a [development build](https://docs.expo.dev/develop/development-builds/introduction/) and cannot be run with [Expo Go](https://expo.dev/go). To run the app with Expo Go, edit the `package.json` file, remove the `expo-dev-client` package and `--dev-client` flag from the `start` script.
+This project has been modified to support Expo Web export so it can be hosted on GitHub Pages.
 
-We highly recommend using the development builds for normal development and testing.
+Live demo URL: https://adamsinnott.github.io/aws-cognito-demo/
 
-The `ios` and `android` folder are gitignored in the project by default as they are automatically generated during the build process ([Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)). This means that you should not edit these folders directly and use [config plugins](https://docs.expo.dev/config-plugins/) instead. However, if you need to edit these folders, you can remove them from the `.gitignore` file so that they are tracked by git.
+Deployment scripts:
 
-## Resources
+- `npm run predeploy` to export the web build (`expo export -p web`)
+- `npm run deploy` to publish `dist` to GitHub Pages
 
-- [React Navigation documentation](https://reactnavigation.org/)
-- [Expo documentation](https://docs.expo.dev/)
+## Scope
 
----
-
-Demo assets are from [lucide.dev](https://lucide.dev/)
+This repository is intended as an exploration/proof-of-concept for Cognito auth flows, not a production-hardened auth starter.
