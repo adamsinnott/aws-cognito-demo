@@ -6,7 +6,9 @@
     "start": "expo start --dev-client",
     "web": "expo start --web",
     "android": "expo run:android",
-    "ios": "expo run:ios"
+    "ios": "expo run:ios",
+    "deploy": "gh-pages --nojekyll -d dist",
+    "predeploy": "expo export -p web"
   },
   "dependencies": {
     "@aws-amplify/react-native": "^1.3.3",
@@ -36,6 +38,7 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@types/react": "~19.1.10",
+    "gh-pages": "^6.3.0",
     "typescript": "~5.9.2"
   },
   "private": true
